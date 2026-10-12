@@ -3,588 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIC Sahayak // Voice Assistant & Policy Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>LIC Sahayak // Voice Portal</title>
+    
+    <!-- PWA Manifest Embedded -->
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIkxJQyBTYWhheWFrIiwKICAic2hvcnRfbmFtZSI6ICJTYWhheWFrIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwMzA3MTIiLAogICJ0aGVtZV9jb2xvciI6ICIjMDI4NGM3IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnNjb3V0LmNvbS9pY29uL3ByZW1pdW1hL3BuZy0yNTYtc3RvcmFnZS81MzMxNjE4LTQ0NTEyNjIucG5nIiwKICAgICAgInNpemVzIjogIjI1NngyNTYiLAogICAgICAidHlwZSI6ICJwbmcifQogIF0KfQ==">
+    <meta name="theme-color" content="#0284c7">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #070c16;
-            --panel: #0f172a;
-            --gold: #f59e0b;
+            --bg: #030712;
+            --surface: #0f172a;
+            --card: #1e293b;
+            --accent-gold: #fbbf24;
             --lic-blue: #0284c7;
-            --text: #e2e8f0;
-            --border: rgba(255, 255, 255, 0.08);
+            --whatsapp: #22c55e;
             --danger: #ef4444;
-            --success: #10b981;
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Google Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--bg);
-            color: var(--text);
-            padding: 16px;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #0369a1, #0c4a6e);
-            padding: 16px 20px;
-            border-radius: 14px;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-        }
-
-        .header-title h1 { font-size: 18px; color: #fff; font-weight: 700; }
-        .header-title p { font-size: 11.5px; color: var(--gold); }
-
-        .btn {
-            background: var(--gold);
-            color: #000;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-blue { background: #0284c7; color: #fff; }
-        .btn-green { background: var(--success); color: #fff; }
-        .btn-danger { background: var(--danger); color: #fff; }
-
-        .vault-bar {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            padding: 10px 14px;
-            border-radius: 10px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .text-input {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            color: #fff;
-            padding: 7px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            outline: none;
-            font-family: inherit;
-        }
-        .text-input:focus { border-color: var(--gold); }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 360px 1fr;
-            gap: 14px;
-        }
-        @media(max-width: 860px) {
-            .grid-layout { grid-template-columns: 1fr; }
-        }
-
-        .panel {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 14px;
             padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
         }
 
-        .panel-header {
-            font-size: 12.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--gold);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .container { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 16px; }
+
+        .portal-card {
+            background: linear-gradient(180deg, #0f172a, #060913);
+            border: 1px solid rgba(2, 132, 199, 0.3);
+            border-radius: 28px; padding: 32px 24px;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
         }
 
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+        .avatar-ring {
+            width: 88px; height: 88px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--lic-blue), var(--accent-gold));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 38px; margin-bottom: 16px;
+            box-shadow: 0 0 30px rgba(2, 132, 199, 0.4);
         }
-        .input-group label {
-            font-size: 10.5px;
-            color: #94a3b8;
-            text-transform: uppercase;
+        .avatar-ring.pulsing { animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); box-shadow: 0 0 40px var(--accent-gold); } }
+
+        .title { font-size: 20px; font-weight: 800; color: #fff; }
+        .subtitle { font-size: 12px; color: var(--accent-gold); margin-top: 4px; font-weight: 600; text-transform: uppercase; }
+
+        .waveform {
+            width: 100%; height: 48px; background: rgba(0,0,0,0.4);
+            border-radius: 12px; margin: 24px 0; display: flex; align-items: center;
+            justify-content: center; gap: 4px; padding: 0 16px;
+        }
+        .bar { width: 4px; height: 10px; background: var(--lic-blue); border-radius: 2px; transition: height 0.1s; }
+
+        .screen {
+            width: 100%; min-height: 80px; background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border); border-radius: 12px;
+            padding: 12px 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; color: #38bdf8; text-align: left; margin-bottom: 24px;
+            line-height: 1.5;
         }
 
-        /* Voice settings box */
-        .voice-settings {
-            background: rgba(0,0,0,0.25);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .btn-call {
+            width: 72px; height: 72px; border-radius: 50%; border: none; cursor: pointer;
+            font-size: 28px; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease; box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
-        .range-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-            color: #cbd5e1;
-        }
-        .range-row input { width: 120px; }
+        .btn-call.start { background: var(--whatsapp); color: #000; }
+        .btn-call.end { background: var(--danger); color: #fff; }
+        .btn-call:hover { transform: scale(1.1); }
 
-        /* Calling simulator */
-        .call-sim {
-            background: rgba(0,0,0,0.3);
-            border: 1px dashed var(--border);
-            border-radius: 10px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .admin-link {
+            text-align: center; font-size: 11.5px; color: var(--text-muted);
+            cursor: pointer; margin-top: 8px; text-decoration: underline;
         }
-        .call-log {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            padding: 10px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 6px;
-            min-height: 55px;
-            color: #38bdf8;
-            line-height: 1.4;
-        }
+        .admin-link:hover { color: var(--accent-gold); }
 
-        /* Table */
-        .table-wrap {
-            max-height: 440px;
-            overflow-y: auto;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+        #admin-panel {
+            display: none; width: 100%; max-width: 900px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 20px; flex-direction: column; gap: 16px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            text-align: left;
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .text-input {
+            background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: #fff;
+            padding: 10px 14px; border-radius: 10px; font-size: 13px; outline: none; width: 100%;
         }
-        th, td {
-            padding: 9px 10px;
-            border-bottom: 1px solid var(--border);
+        .text-input:focus { border-color: var(--accent-gold); }
+        .btn {
+            background: var(--accent-gold); color: #000; border: none; padding: 8px 14px;
+            border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;
         }
-        th {
-            background: rgba(0,0,0,0.5);
-            color: var(--gold);
-            position: sticky;
-            top: 0;
-            z-index: 2;
-        }
-        tr:hover { background: rgba(255,255,255,0.02); }
-        .mini-btn {
-            padding: 4px 7px;
-            font-size: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            border: none;
-            font-weight: 600;
-        }
+        .table-wrap { max-height: 400px; overflow-y: auto; border: 1px solid var(--border); border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
+        th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+        th { background: #0b1220; color: var(--accent-gold); position: sticky; top: 0; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <div class="header-title">
-            <h1>🛡️ LIC Sahayak // AI Assistant Hub</h1>
-            <p>Smart Telephony & Active Policy Management</p>
-        </div>
-        <div style="display:flex; gap:6px;">
-            <button class="btn btn-blue" onclick="exportCSV()">Export CSV</button>
-            <button class="btn btn-blue" onclick="document.getElementById('csv-file').click()">Import CSV</button>
-            <input type="file" id="csv-file" accept=".csv" style="display:none;" onchange="importCSV(event)" />
-        </div>
-    </header>
+<div class="container" id="client-view">
+    <div class="portal-card">
+        <div class="avatar-ring" id="avatar">🛡️</div>
+        <div class="title">LIC Sahayak</div>
+        <div class="subtitle">Official AI Voice Support Line</div>
 
-    <!-- Key Vault -->
-    <div class="vault-bar">
-        <span style="font-size:11px; font-weight:700; color:var(--gold);">API VAULT:</span>
-        <input type="password" id="api-key" class="text-input" style="flex:1;" placeholder="Paste Gemini API Key (starts with AIzaSy...)" />
-        <button class="btn" onclick="saveKey()">Lock Key</button>
+        <div class="waveform" id="waveform">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+
+        <div class="screen" id="transcript">
+            Tap the green button below to speak directly with the LIC assistant about policies, plans, or dues.
+        </div>
+
+        <button class="btn-call start" id="call-btn" onclick="toggleCall()">📞</button>
     </div>
 
-    <div class="grid-layout">
-        <!-- Left Side: Voice Config + Policy Editor + Simulator -->
-        <div class="panel">
-            <!-- Voice Configurator -->
-            <div class="panel-header">🎙️ Voice & JARVIS Profile</div>
-            <div class="voice-settings">
-                <div class="input-group">
-                    <label>Speech Voice</label>
-                    <select id="voice-select" class="text-input" style="background:#0a0f1d;"></select>
-                </div>
-                <div class="range-row">
-                    <span>Pitch (Deep tone: 0.6)</span>
-                    <input type="range" id="voice-pitch" min="0.4" max="1.5" step="0.05" value="0.75" />
-                </div>
-                <div class="range-row">
-                    <span>Rate (Speed: 1.0)</span>
-                    <input type="range" id="voice-rate" min="0.7" max="1.4" step="0.05" value="1.0" />
-                </div>
-                <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="testVoice()">Test Audio Voice</button>
-            </div>
+    <div class="admin-link" onclick="promptAgentLogin()">🔐 Agent Login (Agent Only)</div>
+</div>
 
-            <!-- Client Edit Form -->
-            <div class="panel-header" id="form-title">Add / Edit Policyholder</div>
-            <input type="hidden" id="edit-orig-phone" value="" />
-            
-            <div class="input-group">
-                <label>Name</label>
-                <input type="text" id="in-name" class="text-input" placeholder="e.g. Ramesh Kumar" />
-            </div>
-            <div class="input-group">
-                <label>Phone</label>
-                <input type="text" id="in-phone" class="text-input" placeholder="e.g. 9876543210" />
-            </div>
-            <div class="input-group">
-                <label>Active Plan</label>
-                <input type="text" id="in-plan" class="text-input" placeholder="e.g. Jeevan Labh (Table 936)" />
-            </div>
-            <div class="input-group">
-                <label>Policy No</label>
-                <input type="text" id="in-policy" class="text-input" placeholder="e.g. 128475920" />
-            </div>
-            <div class="input-group">
-                <label>Due Amount & Date</label>
-                <div style="display:flex; gap:6px;">
-                    <input type="text" id="in-amt" class="text-input" style="flex:1;" placeholder="₹14,250" />
-                    <input type="text" id="in-due" class="text-input" style="flex:1;" placeholder="28 Oct 2026" />
-                </div>
-            </div>
-            <div style="display:flex; gap:6px;">
-                <button class="btn" style="flex:1;" onclick="saveRecord()">Save Policyholder</button>
-                <button class="btn btn-danger" id="cancel-btn" style="display:none;" onclick="cancelEdit()">Cancel</button>
-            </div>
+<div class="container" id="admin-panel" style="display:none;">
+    <div class="admin-header">
+        <h3 style="color: var(--accent-gold);">🛡️ Agent Command Center</h3>
+        <button class="btn" style="background:var(--danger); color:#fff;" onclick="lockAdmin()">Lock & Exit</button>
+    </div>
 
-            <!-- Test Call Simulator -->
-            <div class="call-sim">
-                <div style="font-size:10.5px; font-weight:700; color:#94a3b8;">SIMULATE INBOUND CALL</div>
-                <div style="display:flex; gap:6px;">
-                    <input type="text" id="sim-phone" class="text-input" style="flex:1;" placeholder="Enter phone to test call..." />
-                    <button class="btn btn-green" onclick="handleInboundSim()">Dial In</button>
-                </div>
-                <div class="call-log" id="call-output">Status: Line ready for inbound calls.</div>
-            </div>
-        </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input type="text" id="in-name" class="text-input" style="flex:1; min-width:180px;" placeholder="Client Name" />
+        <input type="text" id="in-phone" class="text-input" style="flex:1; min-width:140px;" placeholder="Phone (9876543210)" />
+        <input type="text" id="in-plan" class="text-input" style="flex:1; min-width:140px;" placeholder="Plan (e.g. Jeevan Labh)" />
+        <input type="text" id="in-amt" class="text-input" style="width:110px;" placeholder="Amount" />
+        <input type="text" id="in-due" class="text-input" style="width:130px;" placeholder="Due Date" />
+        <button class="btn" style="background:var(--whatsapp);" onclick="saveClient()">Save Client</button>
+    </div>
 
-        <!-- Right Side: Directory Table -->
-        <div class="panel">
-            <div class="panel-header">
-                <span>Active Directory (<span id="total-clients">0</span>)</span>
-                <button class="btn btn-danger" style="padding:3px 7px; font-size:10px;" onclick="resetDefaults()">Reset Defaults</button>
-            </div>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Plan</th>
-                            <th>Policy No</th>
-                            <th>Due</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="client-table"></tbody>
-                </table>
-            </div>
-
-            <div style="font-size:11px; color:#94a3b8; line-height:1.4;">
-                💡 <b>Outbound Briefing:</b> Click <b>Brief</b> next to any contact to trigger the AI audio reading of that customer's active policy and due dates.
-            </div>
-        </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Name</th><th>Phone</th><th>Plan</th><th>Due Info</th><th>Action</th></tr>
+            </thead>
+            <tbody id="crm-table"></tbody>
+        </table>
     </div>
 </div>
 
 <script>
-    // --- 1. LOCAL STORAGE & DATA SETUP ---
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(URL.createObjectURL(new Blob([`self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));`], { type: 'text/javascript' }))).catch(() => {});
+    }
+
     const DEFAULT_DATA = {
-        "9876543210": { name: "Ramesh Kumar", phone: "9876543210", plan: "Jeevan Labh (Table 936)", policy_no: "128475920", amount: "₹14,250", due: "28 Oct 2026" },
+        "9876543210": { name: "Ramesh Kumar", phone: "9876543210", plan: "Jeevan Labh", policy_no: "128475920", amount: "₹14,250", due: "28 Oct 2026" },
         "9123456789": { name: "Sunita Verma", phone: "9123456789", plan: "Jeevan Umang", policy_no: "349102847", amount: "₹26,000", due: "15 Nov 2026" }
     };
+    function getClients() { return JSON.parse(localStorage.getItem('LIC_SAFE_DB')) || DEFAULT_DATA; }
+    function saveClients(data) { localStorage.setItem('LIC_SAFE_DB', JSON.stringify(data)); renderTable(); }
 
-    function getClients() {
-        const stored = localStorage.getItem('LIC_AI_CLIENTS');
-        return stored ? JSON.parse(stored) : DEFAULT_DATA;
+    function promptAgentLogin() {
+        const pin = prompt("Enter 4-Digit Agent PIN:");
+        if (pin === "1956") {
+            document.getElementById('client-view').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'flex';
+            renderTable();
+        } else if (pin !== null) {
+            alert("Incorrect PIN.");
+        }
+    }
+    function lockAdmin() {
+        document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('client-view').style.display = 'flex';
     }
 
-    function saveAllClients(data) {
-        localStorage.setItem('LIC_AI_CLIENTS', JSON.stringify(data));
-        renderTable();
+    let apiKey = localStorage.getItem('LIC_SAFE_KEY') || '';
+    if(!apiKey) {
+        apiKey = prompt("Enter Gemini 3.8 Flash API Key:") || "";
+        if(apiKey) localStorage.setItem('LIC_SAFE_KEY', apiKey);
     }
 
-    function resetDefaults() {
-        if (confirm("Reset to default test data?")) saveAllClients(DEFAULT_DATA);
-    }
+    let isCalling = false, recog, waveInt;
 
-    // --- 2. API KEY MANAGEMENT ---
-    let apiKey = localStorage.getItem('LIC_GEMINI_KEY') || '';
-    const keyInput = document.getElementById('api-key');
-    if (apiKey) {
-        keyInput.value = apiKey;
-        keyInput.type = 'password';
-        keyInput.placeholder = '••••••••••••••••';
-    }
-
-    function saveKey() {
-        const val = keyInput.value.trim();
-        if (val && !val.includes('•')) {
-            localStorage.setItem('LIC_GEMINI_KEY', val);
-            apiKey = val;
-            keyInput.type = 'password';
-            keyInput.placeholder = '••••••••••••••••';
-            alert('Gemini API Key locked in browser storage!');
+    function animateWave(active) {
+        const bars = document.querySelectorAll('.bar');
+        const av = document.getElementById('avatar');
+        if (active) {
+            av.classList.add('pulsing');
+            waveInt = setInterval(() => { bars.forEach(b => b.style.height = `${Math.floor(Math.random()*28)+8}px`); }, 100);
+        } else {
+            av.classList.remove('pulsing'); clearInterval(waveInt);
+            bars.forEach(b => b.style.height = '10px');
         }
     }
 
-    // --- 3. CUSTOMIZABLE VOICE ENGINE ---
-    const voiceSelect = document.getElementById('voice-select');
-    let voices = [];
-
-    function populateVoices() {
-        if (!('speechSynthesis' in window)) return;
-        voices = window.speechSynthesis.getVoices();
-        voiceSelect.innerHTML = '';
-        
-        voices.forEach((v, idx) => {
-            const opt = document.createElement('option');
-            opt.value = idx;
-            opt.textContent = `${v.name} (${v.lang})`;
-            if (v.lang.includes('hi') || v.lang.includes('IN') || v.name.toLowerCase().includes('david')) {
-                opt.selected = true;
-            }
-            voiceSelect.appendChild(opt);
-        });
-    }
-
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.onvoiceschanged = populateVoices;
-        populateVoices();
-    }
-
-    function speak(text) {
-        if (!('speechSynthesis' in window)) return;
+    function speakAudio(text, cb) {
         window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        
-        const selectedVoiceIdx = voiceSelect.value;
-        if (voices[selectedVoiceIdx]) utter.voice = voices[selectedVoiceIdx];
-        
-        utter.pitch = parseFloat(document.getElementById('voice-pitch').value);
-        utter.rate = parseFloat(document.getElementById('voice-rate').value);
-        window.speechSynthesis.speak(utter);
+        const u = new SpeechSynthesisUtterance(text);
+        const voices = window.speechSynthesis.getVoices();
+        const inVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('IN')) || voices[0];
+        if (inVoice) u.voice = inVoice;
+        u.onstart = () => animateWave(true);
+        u.onend = () => { animateWave(false); if(cb) cb(); };
+        u.onerror = () => { animateWave(false); if(cb) cb(); };
+        window.speechSynthesis.speak(u);
     }
 
-    function testVoice() {
-        speak("Namaste. Main LIC Sahayak hoon. Voice system operational.");
+    function toggleCall() {
+        const btn = document.getElementById('call-btn');
+        if (!isCalling) {
+            isCalling = true; btn.className = 'btn-call end'; btn.innerText = '✕';
+            document.getElementById('transcript').innerText = "Connecting to LIC Sahayak...";
+            speakAudio("Namaste! LIC Sahayak me aapka swagat hai. Kahiye, main aapki kya sahayata karu?", () => { if(isCalling) listen(); });
+        } else {
+            isCalling = false; btn.className = 'btn-call start'; btn.innerText = '📞';
+            window.speechSynthesis.cancel(); animateWave(false); if(recog) recog.abort();
+            document.getElementById('transcript').innerText = "Call ended. Tap green button to start a new call.";
+        }
     }
 
-    // --- 4. RENDER DIRECTORY ---
+    function listen() {
+        if(!isCalling) return;
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SR) { alert("Microphone supported only in Chrome/Brave."); return; }
+        recog = new SR(); recog.lang = 'hi-IN';
+        recog.onstart = () => document.getElementById('transcript').innerText = "Listening to you...";
+        recog.onresult = async (e) => {
+            const txt = e.results[0][0].text;
+            document.getElementById('transcript').innerText = `You: "${txt}"\nThinking...`;
+            await processVoiceAI(txt);
+        };
+        recog.onerror = () => { if(isCalling) setTimeout(listen, 1000); };
+        recog.start();
+    }
+
+    async function processVoiceAI(input) {
+        if (!apiKey) { speakAudio("API Key missing."); return; }
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: `You are LIC Sahayak. Client DB: ${JSON.stringify(getClients())}. Caller: "${input}". Reply in 1-2 short sentences in Hindi/Hinglish suitable for a voice call.` }] }], generationConfig: { temperature: 0.6, maxOutputTokens: 120 } })
+            });
+            const data = await res.json();
+            const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Ji, kripya dobara boliye.";
+            document.getElementById('transcript').innerText = `Assistant: "${reply}"`;
+            speakAudio(reply, () => { if (isCalling) listen(); });
+        } catch (e) {
+            speakAudio("Network drop.");
+        }
+    }
+
     function renderTable() {
         const clients = getClients();
-        const tbody = document.getElementById('client-table');
-        const count = document.getElementById('total-clients');
+        const tbody = document.getElementById('crm-table');
         tbody.innerHTML = '';
-
-        const keys = Object.keys(clients);
-        count.innerText = keys.length;
-
-        if (keys.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#64748b;">No client records. Add one above.</td></tr>`;
-            return;
-        }
-
-        keys.forEach(p => {
+        Object.keys(clients).forEach(p => {
             const c = clients[p];
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><b>${c.name}</b></td>
-                <td><code>${c.phone}</code></td>
-                <td>${c.plan}</td>
-                <td>${c.policy_no}</td>
-                <td><b>${c.amount}</b><br><small style="color:#94a3b8;">${c.due}</small></td>
-                <td>
-                    <div style="display:flex; gap:4px;">
-                        <button class="mini-btn btn-green" onclick="briefCall('${c.phone}')">Brief</button>
-                        <button class="mini-btn btn-blue" onclick="editRecord('${c.phone}')">Edit</button>
-                        <button class="mini-btn btn-danger" onclick="deleteRecord('${c.phone}')">✕</button>
-                    </div>
-                </td>
-            `;
-            tbody.appendChild(tr);
+            tbody.innerHTML += `<tr><td><b>${c.name}</b></td><td><code>${c.phone}</code></td><td>${c.plan}</td><td><b>${c.amount}</b><br><small>${c.due}</small></td><td><button class="btn" style="background:var(--danger); color:#fff; padding:3px 6px; font-size:10px;" onclick="delClient('${p}')">Delete</button></td></tr>`;
         });
     }
 
-    // --- 5. EDIT & DELETE ---
-    function saveRecord() {
-        const name = document.getElementById('in-name').value.trim();
-        const phone = document.getElementById('in-phone').value.trim();
-        const plan = document.getElementById('in-plan').value.trim();
-        const policy_no = document.getElementById('in-policy').value.trim();
-        const amount = document.getElementById('in-amt').value.trim();
-        const due = document.getElementById('in-due').value.trim();
-        const orig = document.getElementById('edit-orig-phone').value;
-
-        if (!name || !phone) { alert("Name and phone are required."); return; }
-
-        const clients = getClients();
-        if (orig && orig !== phone) delete clients[orig];
-
-        clients[phone] = { name, phone, plan, policy_no, amount, due };
-        saveAllClients(clients);
-        cancelEdit();
+    function saveClient() {
+        const c = { name: document.getElementById('in-name').value, phone: document.getElementById('in-phone').value, plan: document.getElementById('in-plan').value, amount: document.getElementById('in-amt').value, due: document.getElementById('in-due').value };
+        if(!c.name || !c.phone) return alert("Name & Phone required");
+        const db = getClients(); db[c.phone] = c; saveClients(db);
+        document.getElementById('in-name').value = ''; document.getElementById('in-phone').value = '';
+        alert("Client saved!");
     }
 
-    function editRecord(phone) {
-        const c = getClients()[phone];
-        if (!c) return;
-        document.getElementById('in-name').value = c.name;
-        document.getElementById('in-phone').value = c.phone;
-        document.getElementById('in-plan').value = c.plan;
-        document.getElementById('in-policy').value = c.policy_no;
-        document.getElementById('in-amt').value = c.amount;
-        document.getElementById('in-due').value = c.due;
-        document.getElementById('edit-orig-phone').value = phone;
-        document.getElementById('form-title').innerText = `Edit: ${c.name}`;
-        document.getElementById('cancel-btn').style.display = 'inline-block';
+    function delClient(phone) {
+        if(confirm("Delete record?")) { const db = getClients(); delete db[phone]; saveClients(db); }
     }
-
-    function cancelEdit() {
-        document.getElementById('in-name').value = '';
-        document.getElementById('in-phone').value = '';
-        document.getElementById('in-plan').value = '';
-        document.getElementById('in-policy').value = '';
-        document.getElementById('in-amt').value = '';
-        document.getElementById('in-due').value = '';
-        document.getElementById('edit-orig-phone').value = '';
-        document.getElementById('form-title').innerText = "Add / Edit Policyholder";
-        document.getElementById('cancel-btn').style.display = 'none';
-    }
-
-    function deleteRecord(phone) {
-        if (confirm(`Remove ${phone}?`)) {
-            const clients = getClients();
-            delete clients[phone];
-            saveAllClients(clients);
-        }
-    }
-
-    // --- 6. SIMULATE CALLS (AI INTEGRATION) ---
-    async function handleInboundSim() {
-        const phone = document.getElementById('sim-phone').value.trim();
-        const out = document.getElementById('call-output');
-        const clients = getClients();
-        const c = clients[phone];
-
-        if (!c) {
-            const reply = "Namaste! LIC advisor office me aapka swagat hai. Aap kisi naye policy plan ke baare me jaankari chahte hain?";
-            out.innerHTML = `<b>📞 Inbound [Unknown Caller]:</b> "${reply}"`;
-            speak(reply);
-            return;
-        }
-
-        // If registered client, prompt Gemini for customized response
-        out.innerHTML = `📞 Call from ${c.name}... Generating personalized response...`;
-        
-        let reply = `Namaste ${c.name} ji! Main LIC Sahayak hoon. Aapki policy ${c.plan} active hai, aur agla premium ${c.amount}, ${c.due} ko due hai. Main aapki kya sahayata kar sakta hoon?`;
-
-        if (apiKey) {
-            try {
-                const prompt = `A client named ${c.name} just called. Their active plan is ${c.plan}, policy number ${c.policy_no}, due amount ${c.amount} on ${c.due}. Provide a polite 2-sentence greeting in Hindi mentioning their status.`;
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }] })
-                });
-                const data = await res.json();
-                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                    reply = data.candidates[0].content.parts[0].text;
-                }
-            } catch (err) {
-                console.warn("Using offline greeting fallback.");
-            }
-        }
-
-        out.innerHTML = `<b>📞 Connected to ${c.name}:</b> "${reply}"`;
-        speak(reply);
-    }
-
-    function briefCall(phone) {
-        const c = getClients()[phone];
-        if (!c) return;
-        const out = document.getElementById('call-output');
-        const speech = `Namaste ${c.name} ji! Yeh call aapke LIC advisor ki taraf se hai. Aapke ${c.plan} ka agla premium ${c.amount}, ${c.due} ko due hai. Kripya samay par jama karein. Dhanyawad!`;
-        out.innerHTML = `<b>📲 Outbound Briefing to ${c.phone}:</b> "${speech}"`;
-        speak(speech);
-    }
-
-    // --- 7. CSV IMPORT / EXPORT ---
-    function exportCSV() {
-        const clients = getClients();
-        let csv = "Name,Phone,Plan,PolicyNo,Amount,DueDate\n";
-        Object.values(clients).forEach(c => {
-            csv += `"${c.name}","${c.phone}","${c.plan}","${c.policy_no}","${c.amount}","${c.due}"\n`;
-        });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
-        a.download = "lic_clients.csv";
-        a.click();
-    }
-
-    function importCSV(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-            const lines = evt.target.result.split('\n');
-            const clients = getClients();
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (!line) continue;
-                const cols = line.split(',').map(s => s.replace(/"/g, '').trim());
-                if (cols.length >= 2 && cols[1]) {
-                    clients[cols[1]] = {
-                        name: cols[0] || 'Client',
-                        phone: cols[1],
-                        plan: cols[2] || 'LIC Plan',
-                        policy_no: cols[3] || 'N/A',
-                        amount: cols[4] || 'N/A',
-                        due: cols[5] || 'N/A'
-                    };
-                }
-            }
-            saveAllClients(clients);
-            alert("CSV Imported!");
-        };
-        reader.readAsText(file);
-    }
-
-    renderTable();
 </script>
 </body>
 </html>
